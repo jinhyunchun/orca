@@ -1,7 +1,6 @@
 import { EventEmitter } from 'node:events'
 import type * as FsPromises from 'node:fs/promises'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Store } from '../persistence'
 import type { ModelManager } from '../speech/model-manager'
 import type { SttService } from '../speech/stt-service'
 import type { RuntimeStore } from '../runtime/runtime-store-contract'
@@ -167,7 +166,7 @@ describe('speech worker exit ownership', () => {
       modelManager as ModelManager
     )
     // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: Mocked runtime accessors do not read the store.
-    registerSpeechHandlers({} as Store)
+    registerSpeechHandlers({ getSettings: () => ({}) } as never)
   })
   afterEach(async () => {
     window.destroyed = true
