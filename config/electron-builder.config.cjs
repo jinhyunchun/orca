@@ -72,7 +72,8 @@ const { signWindowsUninstallerViaSignPath } = require('./scripts/windows-uninsta
 const { buildMacShipItScheduling } = require('./scripts/macos-shipit-scheduling.cjs')
 const {
   createWindowsArchitectureResources,
-  getWindowsInstallerArtifactName
+  getWindowsInstallerArtifactName,
+  getWindowsUpdateChannelPublishOptions
 } = require('./windows-package-architecture.cjs')
 
 // Dev channels need release bundle ID/signature/notarization so Squirrel.Mac accepts updates and macOS retains app identity.
@@ -721,7 +722,8 @@ module.exports = {
     owner: 'stablyai',
     repo: devChannelRepo ?? 'orca',
     // Keep main-repo releases draft until release-cut verifies all assets; early --publish always would expose missing Windows installers.
-    releaseType: devChannelRepo ? 'prerelease' : 'draft'
+    releaseType: devChannelRepo ? 'prerelease' : 'draft',
+    ...getWindowsUpdateChannelPublishOptions()
   }
 }
 
